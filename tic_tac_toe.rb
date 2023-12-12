@@ -15,7 +15,7 @@ class Game
 
   def take_turn(board)
     make_move(@board)
-    next_player(@current)
+    # next_player(@current)
     display_board(@board)
   end
 
@@ -40,6 +40,40 @@ class Game
                end
   end
 
+  def check_winner()
+    check_rows(@board)
+    check_columns(@board)
+    check_diagonals(@board)
+  end
+
+  def check_rows(board)
+    if board[0][0] == board[0][1] && board[0][1] == board[0][2]
+      @winner = board[0][0]
+    elsif board[1][0] == board[1][1] && board[1][1] == board[1][2]
+      @winner = board[1][0]
+    elsif board[2][0] == board[2][1] && board[2][1] == board[2][2]
+      @winner = board[2][0]
+    end
+  end
+
+  def check_columns(board)
+    if board[0][0] == board[1][0] && board[1][0] == board[2][0]
+      @winner = board[0][0]
+    elsif board[0][1] == board[1][1] && board[1][1] == board[2][1]
+      @winner = board[0][1]
+    elsif board[0][2] == board[1][2] && board[1][2] == board[2][2]
+      @winner = board[0][2]
+    end
+  end
+
+  def check_diagonals(board)
+    if board[0][0] == board[1][1] && board[1][1] == board[2][2]
+      @winner = board[0][0]
+    elsif board[2][0] == board[1][1] && board[1][1] == board[0][2]
+      @winner = board[2][0]
+    end
+  end
+
   def start_game
     winner = ''
     puts 'The Game Begins!'
@@ -47,6 +81,9 @@ class Game
 
     take_turn(@board) # while winner == ''
     take_turn(@board) # while winner == ''
+    take_turn(@board) # while winner == ''
+    check_winner
+    puts @winner
   end
 end
 
