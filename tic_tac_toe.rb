@@ -13,12 +13,17 @@ class Game
   end
 
   def take_turn(player, board)
-    puts 'Enter x Coordinate (1-3)'
-    x_coord = gets.chomp.to_i - 1
-    puts 'Enter y Coordinate (1-3)'
-    y_coord = gets.chomp.to_i - 1
+    begin
+      puts 'Enter x Coordinate (1-3)'
+      x_coord = gets.chomp.to_i - 1
+      puts 'Enter y Coordinate (1-3)'
+      y_coord = gets.chomp.to_i - 1
 
-    board[x_coord][y_coord] = player
+      board[x_coord][y_coord] = player
+    rescue StandardError
+      puts '** Invalid Coordinates entered, please try again. **'
+    end
+
     display_board(@board)
   end
 
@@ -28,7 +33,7 @@ class Game
     puts 'The Game Begins!'
     display_board(@board)
 
-    take_turn("x", @board) # while winner == ''
+    take_turn('x', @board) # while winner == ''
   end
 end
 
