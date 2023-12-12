@@ -19,20 +19,23 @@ class Game
       x_coord = gets.chomp.to_i - 1
       puts 'Enter y Coordinate (1-3)'
       y_coord = gets.chomp.to_i - 1
-
-      board[x_coord][y_coord] = @current
+      if board[x_coord][y_coord] == '[]'
+        board[x_coord][y_coord] = @current
+      else puts 'Those Coordinates are already taken, try again.'
+      end
       next_player(@current)
     rescue StandardError
-      puts '** Invalid Coordinates entered, please try again. **'
-    end
+      puts '** Invalid Coordinates entered, please try again. **' end
 
     display_board(@board)
   end
 
   def next_player(current)
-    if @current == @player1
-      @current = @player2
-    else @current = @player1 end
+    @current = if @current == @player1
+                 @player2
+               else
+                 @player1
+               end
   end
 
   def start_game
