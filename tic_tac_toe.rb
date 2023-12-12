@@ -14,20 +14,22 @@ class Game
   end
 
   def take_turn(board)
-    begin
-      puts 'Enter x Coordinate (1-3)'
-      x_coord = gets.chomp.to_i - 1
-      puts 'Enter y Coordinate (1-3)'
-      y_coord = gets.chomp.to_i - 1
-      if board[x_coord][y_coord] == '[]'
-        board[x_coord][y_coord] = @current
-      else puts 'Those Coordinates are already taken, try again.'
-      end
-      next_player(@current)
-    rescue StandardError
-      puts '** Invalid Coordinates entered, please try again. **' end
-
+    make_move(@board)
+    next_player(@current)
     display_board(@board)
+  end
+
+  def make_move(board)
+    puts 'Enter x Coordinate (1-3)'
+    x_coord = gets.chomp.to_i - 1
+    puts 'Enter y Coordinate (1-3)'
+    y_coord = gets.chomp.to_i - 1
+
+    if board[x_coord][y_coord] != '[]'
+      puts 'Those Coordinates are invalid, try again.'
+      make_move(@board)
+    else
+      board[x_coord][y_coord] = @current end
   end
 
   def next_player(current)
