@@ -3,6 +3,7 @@ class Game
     @player1 = 'X'
     @player2 = 'O'
     @current = @player1
+    @winner = '[]'
     @board = Array.new(3) {Array.new(3, '[]') }
   end
 
@@ -15,7 +16,8 @@ class Game
 
   def take_turn(board)
     make_move(@board)
-    # next_player(@current)
+    check_winner()
+    next_player(@current)
     display_board(@board)
   end
 
@@ -27,6 +29,7 @@ class Game
 
     if board[x_coord][y_coord] != '[]'
       puts 'Those Coordinates are invalid, try again.'
+      display_board(@board)
       make_move(@board)
     else
       board[x_coord][y_coord] = @current end
@@ -75,15 +78,11 @@ class Game
   end
 
   def start_game
-    winner = ''
     puts 'The Game Begins!'
     display_board(@board)
 
-    take_turn(@board) # while winner == ''
-    take_turn(@board) # while winner == ''
-    take_turn(@board) # while winner == ''
-    check_winner
-    puts @winner
+    take_turn(@board) while @winner == '[]'
+    puts "The winner is: " + @winner
   end
 end
 
